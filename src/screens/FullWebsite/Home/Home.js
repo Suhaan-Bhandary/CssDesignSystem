@@ -11,7 +11,7 @@ const Home = () => {
     <div className={`${styles.Home}`}>
       <a className="skip-to-content" href="#main">
         Skip to content
-      </a>    
+      </a>
 
       <NavBar CurrentPage="Home" />
 
@@ -30,7 +30,7 @@ const Home = () => {
         </div>
         <div>
           <a
-            href="/"
+            href="/FinalWebsite/Destination"
             className="large-button uppercase ff-serif text-dark fs-600 bg-white"
           >
             Explore
