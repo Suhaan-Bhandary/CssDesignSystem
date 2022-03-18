@@ -1,13 +1,699 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Barlow:wght@400;700&family=Bellefair&family=Poppins:wght@400;700&display=swap");
+
+/* ----------------------------------------------- */
+/*  Custom Properties                              */
+/* ----------------------------------------------- */
+
+:root {
+  /*
+    --clr-dark: hsl(230 35% 75%); 
+    .bg-dark { background-color: hsl(var(--clr-dark) / 0.2);}
+  */
+  /*
+    We can do the above, 
+    but it will restric us the alpha value of the color,
+    to change alpha we declare the color as belowo 
+  */
+
+  /* Colors */
+  --clr-dark: 230 35% 7%;
+  --clr-light: 231 77% 90%;
+  --clr-white: 0 0% 100%;
+
+  /* Font-Sizes */
+  /* 
+    Here the rem is used because of the accessibility reason, 
+    as if the user has changed the configuration of
+    his system to make the font size big or small,
+    Using px will cause the setting of the user to not work 
+    and for this reason we use rem
+  */
+
+  /* Mobile Fonts */
+  /* we use rem with view post as when zooming the view portdoesnot updates but with the rem value it updates */
+  --fs-900: clamp(5rem, 8vw + 1rem, 90.9375rem);
+  --fs-800: 3.5rem;
+  --fs-700: 1.5rem;
+  --fs-600: 1rem;
+  --fs-500: 1rem;
+  --fs-400: 0.9375rem;
+  --fs-300: 1rem;
+  --fs-200: 0.875rem;
+
+  /* Font Families */
+  --ff-serif: "Bellefair", serif;
+  --ff-sans-cond: "Barlow Condensed", sans-serif;
+  --ff-sans-normal: "Barlow", sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@media (min-width: 35em) {
+  :root {
+    --fs-800: 5rem;
+    --fs-700: 2.5rem;
+    --fs-500: 1.25rem;
+    --fs-600: 1.5rem;
+    --fs-400: 1rem;
+  }
+}
+
+@media (min-width: 45em) {
+  :root {
+    --fs-800: 6.25rem;
+    --fs-700: 3.5rem;
+    --fs-500: 1.75rem;
+    --fs-600: 2rem;
+    --fs-400: 1.125rem;
+  }
+}
+
+/* ----------------------------------------------- */
+/*  Reset                                          */
+/* ----------------------------------------------- */
+
+/* https://piccalil.li/blog/a-modern-css-reset/ a link to a reset guide */
+
+/* Box Sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Reset margins */
+.App,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+picture {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-weight: 400;
+}
+
+/* Set up the body */
+body,
+.App {
+  font-family: var(--ff-sans-normal);
+  font-size: var(--fs-400);
+  color: hsl(var(--clr-white));
+  background-color: hsl(var(--clr-dark));
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Make forms elements easier to work with */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Renive animations for people who've turned them off */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ----------------------------------------------- */
+/*  General Utility Classes                        */
+/* ----------------------------------------------- */
+
+.flex {
+  display: flex;
+  gap: var(--gap, 1rem);
+}
+
+.grid {
+  display: grid;
+  gap: var(--gap, 1rem);
+}
+
+.d-block {
+  display: block;
+}
+/* 
+  Andy Bell - version 
+  > * + * is the lobotomized owl
+
+  .flow > * + *{
+    margin-top: 1rem;
+    outline: 1px solid red;
+  }
+
+  OR 
+  [
+    The below method uses pseudo class which has same specificity as the class, 
+    so it may create issues regarding the specificity.
+
+    To avoid this issue, we can also use the two new selectors in CSS which are "is" and "where"
+    "is" add the hightest specificity inside it
+    "where" doesnot add any specificity to it 
+    so we can use it as shown below:
+    .flow > *:where(:not(:first-child)){
+      margin-top: 1rem;
+      outline: 1px solid red;
+    }
+    
+
+    is and where are very useful as they let us select things inside the container
+    eg:
+    .card h1,
+    .card h2,
+    .card h3{
+      --styles
+    }
+    Can be written as
+    .card :is(h1, h2, h3) -- gets specificities of the highest specificity child
+    .card :where(h1, h2, h3) -- not specificities
+    
+
+  ]
+
+  .flow > *:not(:first-child){
+    margin-top: 1rem;
+    outline: 1px solid red;
+  }
+
+
+  If you want to leave the last child then
+  .flow > *:not(:last-child){
+    margin-top: 1rem;
+    outline: 1px solid red;
+  }
+
+*/
+.flow > * + * {
+  margin-top: var(--flow-space, 1rem);
+  /* outline: 1px solid red; */
+}
+
+.flow--space-small{
+  --flow-space: 0.5rem;
+}
+
+.container {
+  padding-inline: 2em; /* Will only the padding for left and right as it is inline(modern property) */
+  margin-inline: auto;
+  max-width: 80rem;
+}
+
+.grid-container {
+  text-align: center;
+  /* outline: 5px solid green; */
+  display: grid;
+
+  padding: 2rem;
+
+  place-items: center;
+  /* Adding gap  row-gap: 10%; */
+
+  /* To make it responsive we will be usinig media query */
+  /* column-gap: var(--container-gap, 2rem); */
+  /* The below minmax(2rem, 1fr) will make the content at the center of the grid */
+  /* grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(2rem, 1fr); */
+}
+
+.grid-container p:not([class]){
+  max-width: 50ch;
+
+  /* outline: 1px solid green; */
+}
+
+/* Making the grid only available when we are in desktop or big tablets */
+@media (min-width: 45em) {
+  .grid-container {
+    text-align: left;
+    /* outline: 5px solid green; */
+    display: grid;
+
+    column-gap: var(--container-gap, 2rem);
+    grid-template-columns:
+      minmax(2rem, 1fr)
+      repeat(2, minmax(0, 40rem))
+      minmax(2rem, 1fr);
+
+    place-items: center;
+  }
+
+  .grid-container > *:first-child {
+    grid-column: 2;
+    /* outline: 1px solid red; */
+  }
+
+  .grid-container > *:last-child {
+    grid-column: 3;
+    /* outline: 1px solid yellow; */
+  }
+
+  /* Bem naming convention, which means that the grid container has changes */
+  .grid-container--home {
+    padding-bottom: max(6rem, 20vh);
+    align-items: end;
+  }
+}
+
+/* 
+  sr-only stands for screen reader only, 
+  this will be hellfull for those who cannot properly see and use screen reader,
+  When ever they come accross a button or a component which they cannot read we will provide a special component 
+  which cannot be seen by regural user but can only be seen by the screen reader software which will further
+  increase the accessibility of the site
+*/
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-to-content{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-150%);
+
+  z-index: 1000;
+  color:hsl(var(--clr-dark));
+  background: hsl(var(--clr-white));
+  text-decoration: none;
+  font-weight: 700;
+
+  padding: 0.5em 1em;
+  margin: 10px;
+
+  transition: transform 250ms ease-in;
+}
+
+.skip-to-content:focus{
+  transform: translateX(-50%) translateY(0%);
+}
+
+/* Colors */
+.bg-dark {
+  background-color: hsl(var(--clr-dark));
+}
+.bg-accent {
+  background-color: hsl(var(--clr-light));
+}
+.bg-white {
+  background-color: hsl(var(--clr-white));
+}
+
+.text-dark {
+  color: hsl(var(--clr-dark));
+}
+.text-accent {
+  color: hsl(var(--clr-light));
+}
+.text-white {
+  color: hsl(var(--clr-white));
+}
+
+/* typography */
+.ff-serif {
+  font-family: var(--ff-serif);
+}
+.ff-sans-cond {
+  font-family: var(--ff-sans-cond);
+}
+.ff-sans-normal {
+  font-family: var(--ff-serif);
+}
+
+.letter-spacing-1 {
+  letter-spacing: 4.75px;
+}
+.letter-spacing-2 {
+  letter-spacing: 2.7px;
+}
+.letter-spacing-3 {
+  letter-spacing: 2.35px;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.fs-900 {
+  font-size: var(--fs-900);
+}
+.fs-800 {
+  font-size: var(--fs-800);
+}
+.fs-700 {
+  font-size: var(--fs-700);
+}
+.fs-600 {
+  font-size: var(--fs-600);
+}
+.fs-500 {
+  font-size: var(--fs-500);
+}
+.fs-400 {
+  font-size: var(--fs-400);
+}
+.fs-300 {
+  font-size: var(--fs-300);
+}
+.fs-200 {
+  font-size: var(--fs-200);
+}
+
+.fs-900,
+.fs-800,
+.fs-700,
+.fs-600 {
+  line-height: 1.1;
+}
+
+/* Numbered Titles */
+.numbered-titles {
+  font-family: var(--ff-sans-cond);
+  font-size: var(--fs-500);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.numbered-titles span {
+  margin-right: 0.5em;
+  font-weight: 700;
+  color: hsl(var(--clr-light) / 0.25);
+}
+
+/* ----------------------------------------------- */
+/*  Components                                     */
+/* ----------------------------------------------- */
+
+/* Buttons */
+.large-button {
+  /* display: inline-block; not using this as it will not let use make the element at centre vertically */
+
+  /* We can use display flex or grid to centre the button text! 
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+  */
+  font-size: 2rem;
+  z-index: 1;
+
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+
+  /* width/height */
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  padding: 0 2em;
+
+  text-decoration: none;
+}
+
+.large-button::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+
+  width: 100%;
+  aspect-ratio: 1/1;
+
+  background: hsl(var(--clr-white) / 0.15);
+  opacity: 0;
+  border-radius: 50%;
+
+  transition: opacity 500ms ease-in-out, transform 720ms ease-in-out;
+}
+
+/* Here focus is used to keep the hover state if some one clicks on it */
+.large-button:hover::after,
+.large-button:focus::after {
+  /* width: 120%; Donot do this as it is very expensive on browser*/
+  /* mainly use the transform as it does not force repain */
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+/* Navigation */
+.logo {
+  margin: 2rem clamp(1.5rem, 5vw, 3.5rem);
+}
+
+.primary-header {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.primary-navigation {
+  --gap: clamp(1rem, 5vw, 3.5rem);
+  --underline-gap: 2rem 0;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  /* Creating the glassmorphism background */
+  background: hsl(var(--clr-dark) / 0.9);
+}
+
+.mobile-nav-toggle {
+  display: none;
+}
+
+/* 
+  @supports is used to check if the property works in the browser or not
+  We requre both the property and the value and then define the stying 
+
+  If you want to check if it not support then use
+  @supports not (backdrop-filter: blur(1.5rem))
+*/
+@supports (backdrop-filter: blur(1.5rem)) {
+  .primary-navigation {
+    background: hsl(var(--clr-white) / 0.05);
+    backdrop-filter: blur(2rem);
+  }
+}
+
+.primary-navigation a {
+  text-decoration: none;
+}
+
+/* We donot add .primary-navigation span, since it may create some  */
+.primary-navigation a > span {
+  font-weight: 700;
+  margin-right: 0.5em;
+}
+
+/* Creating the underline indicator for the navigation bar */
+/* WE are using * as if li is replaced with other tags it will work still */
+.underline-indicator > * {
+  cursor: pointer;
+  padding: var(--underline-gap, 0.5em 0);
+  border: 0;
+  transition: all 0.5 ease-in-out;
+}
+
+.underline-indicator button {
+  background-color: transparent;
+}
+
+.underline-indicator button:focus {
+  outline: none;
+}
+
+.underline-indicator > .active,
+.underline-indicator > [aria-selected="true"] {
+  border-bottom: 2px solid hsl(var(--clr-white) / 1);
+}
+
+.underline-indicator > *:not(.active):hover,
+.underline-indicator > *:not(.active):focus {
+  border-bottom: 2px solid hsl(var(--clr-white) / 0.5);
+}
+
+/* We are using max with as the navigation in mobile is more complex */
+@media (max-width: 35rem) {
+  .primary-navigation {
+    --gap: 0;
+    --underline-gap: 0.5rem 0;
+
+    list-style: none;
+    padding: min(20rem, 10vh) 2rem;
+    margin: 0;
+
+    position: fixed;
+    inset: 0 0 0 20%;
+
+    flex-direction: column;
+    z-index: 1000;
+
+    transform: translateX(100%);
+    transition: transform 500ms ease-in-out;
+  }
+
+  .primary-navigation.active {
+    transform: translateX(0);
+  }
+
+  /* We are not removing the hover border as it will be good for people using computer with small window */
+  .primary-navigation.underline-indicator > .active {
+    border: 0;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+    position: absolute;
+    z-index: 2000;
+    right: 1rem;
+    top: 2rem;
+
+    background-color: transparent;
+    background-image: url(./assets/shared/icon-hamburger.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+    border: 0;
+
+    width: 1.5rem;
+    aspect-ratio: 1/1;
+
+    cursor: pointer;
+  }
+
+  .mobile-nav-toggle.close {
+    background-image: url(./assets/shared/icon-close.svg);
+  }
+
+  .mobile-nav-toggle:focus-visible {
+    outline: 1px solid white;
+    outline-offset: 5px;
+  }
+}
+
+@media (min-width: 35em) {
+  .primary-navigation{
+    padding-inline: clamp(2.5rem, 5vw, 7rem);
+  }
+}
+
+@media (min-width: 35em) and (max-width: 45em) {
+  .primary-navigation a > span {
+    display: none;
+  }
+}
+
+@media (min-width: 45em) {
+  .primary-header:before{
+    content: "";
+    position: relative;
+    display: block;
+
+    width: 100%;
+    height: 1px;
+    background-color: hsl(var(--clr-white) / 0.20);
+
+    order: 1;
+    z-index: 1;
+
+    margin-right: -2rem;
+  }
+
+  nav{
+    order: 2;
+  }
+
+  .primary-navigation{
+    margin-block: 2rem;
+  }
+
+}
+
+/* Tabs */
+.tab-list {
+  --gap: 2.5rem;
+}
+
+.dot-indicators > * {
+  cursor: pointer;
+  border: 0;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  padding: 0.5em;
+
+  background-color: hsl(var(--clr-white) / 0.25);
+}
+
+.dot-indicators > *:hover,
+.dot-indicators > *:focus {
+  background-color: hsl(var(--clr-white) / 0.5);
+}
+
+.dot-indicators > [aria-selected="true"],.dot-indicators > .active {
+  background-color: hsl(var(--clr-white) / 1);
+}
+
+/* Number Indicators */
+.number-indicators {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.number-indicators > * {
+  cursor: pointer;
+  border-radius: 50%;
+
+  width: 4em;
+  aspect-ratio: 1/1;
+  font-weight: 500;
+
+  color: hsl(var(--clr-white) / 0.8);
+  background-color: hsl(var(--clr-white) / 0);
+  border: 1px solid hsl(var(--clr-white) / 0.2);
+}
+
+.number-indicators > *:hover,
+.number-indicators > *:focus {
+  color: hsl(var(--clr-white) / 1);
+  border: 1px solid hsl(var(--clr-white) / 1);
+}
+
+.number-indicators > [aria-selected="true"] ,
+.number-indicators > button.active{
+  color: hsl(var(--clr-dark) / 1);
+  background-color: hsl(var(--clr-white) / 1);
 }

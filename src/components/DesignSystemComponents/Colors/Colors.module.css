@@ -1,0 +1,20 @@
+/* Learning */
+.colors{
+  padding: 0.5rem 2.5rem;
+}
+
+.flexFullGrow{
+  flex: 1;
+}
+
+.colorBox{
+  margin: 2rem 0 1.5rem 0;
+}
+
+.colorList p{
+  color: hsl(var(--clr-white) / 0.6)
+}
+
+.spanSpace{ 
+  margin-right: 3rem;
+}
