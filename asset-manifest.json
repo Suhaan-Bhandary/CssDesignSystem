@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/CssDesignSystem/static/css/main.462809f8.css",
-    "main.js": "/CssDesignSystem/static/js/main.92edfcf6.js",
+    "main.js": "/CssDesignSystem/static/js/main.3313b9d2.js",
     "static/js/787.38aa03a8.chunk.js": "/CssDesignSystem/static/js/787.38aa03a8.chunk.js",
     "static/media/image-victor-glover.png": "/CssDesignSystem/static/media/image-victor-glover.8a9a5424588b73ec61c2.png",
     "static/media/image-anousheh-ansari.png": "/CssDesignSystem/static/media/image-anousheh-ansari.2d647128496ddc638acd.png",
@@ -32,11 +32,11 @@
     "static/media/icon-close.svg": "/CssDesignSystem/static/media/icon-close.d47fda63cbd8b3fedbbc.svg",
     "static/media/icon-hamburger.svg": "/CssDesignSystem/static/media/icon-hamburger.5273efa7c50e96ef3e51.svg",
     "main.462809f8.css.map": "/CssDesignSystem/static/css/main.462809f8.css.map",
-    "main.92edfcf6.js.map": "/CssDesignSystem/static/js/main.92edfcf6.js.map",
+    "main.3313b9d2.js.map": "/CssDesignSystem/static/js/main.3313b9d2.js.map",
     "787.38aa03a8.chunk.js.map": "/CssDesignSystem/static/js/787.38aa03a8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.462809f8.css",
-    "static/js/main.92edfcf6.js"
+    "static/js/main.3313b9d2.js"
   ]
 }
