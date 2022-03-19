@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import styles from "./Home.module.css";
 import NavBar from "../../../components/FullWebsite/NavBar/NavBar";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   useEffect(() => {
@@ -29,12 +30,12 @@ const Home = () => {
           </p>
         </div>
         <div>
-          <a
-            href="/FinalWebsite/Destination"
+          <Link
+            to="/FinalWebsite/Destination"
             className="large-button uppercase ff-serif text-dark fs-600 bg-white"
           >
             Explore
-          </a>
+          </Link>
         </div>
       </main>
     </div>
