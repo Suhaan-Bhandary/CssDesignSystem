@@ -12,6 +12,10 @@
   overflow: hidden;
 }
 
+.textContainer{
+  margin-bottom: 1rem;
+}
+
 @media (min-width: 35em) {
     .Home {
         background-position: center center;

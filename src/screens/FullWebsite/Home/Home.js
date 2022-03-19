@@ -17,7 +17,7 @@ const Home = () => {
       <NavBar CurrentPage="Home" />
 
       <main id="main" className="grid-container grid-container--home">
-        <div>
+        <div className={styles.textContainer}>
           <h1 className="text-accent fs-500 ff-sans-cond uppercase letter-spacing-1">
             So, you want to travel to{" "}
             <span className="fs-900 ff-serif text-white d-block">Space</span>
